@@ -1,1 +1,34 @@
-{"telefone":"03137863707","endereco":{"cidade":"Pedrostad","estado":"PB","numero":88629,"logradouro":"84015 Fritsch Crescent","bairro":"New","cep":"01007030"},"escolaridades":[{"dataFim":"2008-10-26","instituicao":"Huels Inc","dataInicio":"1974-10-11","nivel":"Leadership","descricao":"Seaking"}],"experiencias":[{"dataFim":"1996-06-15","instituicao":"Dicki-Bahringer","dataInicio":"1953-04-09","cargo":"Leadership","descricao":"Flareon"}],"cpf":"7627034027","nome":"Dr. Kathrin Rutherford","dataNascimento":"1958-07-23","senioridade":"PLENO","cargo":"Communication"}
+{
+  "telefone": "03137863707",
+  "endereco": {
+    "cidade": "Pedrostad",
+    "estado": "PB",
+    "numero": 88629,
+    "logradouro": "84015 Fritsch Crescent",
+    "bairro": "New",
+    "cep": "01007030"
+  },
+  "escolaridades": [
+    {
+      "dataFim": "2008-10-26",
+      "instituicao": "Huels Inc",
+      "dataInicio": "1974-10-11",
+      "nivel": "Leadership",
+      "descricao": "Seaking"
+    }
+  ],
+  "experiencias": [
+    {
+      "dataFim": "1996-06-15",
+      "instituicao": "Dicki-Bahringer",
+      "dataInicio": "1953-04-09",
+      "cargo": "Leadership",
+      "descricao": "Flareon"
+    }
+  ],
+  "cpf": "7627034027",
+  "nome": "Dr. Kathrin Rutherford",
+  "dataNascimento": "1958-07-23",
+  "senioridade": "PLENO",
+  "cargo": "Communication"
+}

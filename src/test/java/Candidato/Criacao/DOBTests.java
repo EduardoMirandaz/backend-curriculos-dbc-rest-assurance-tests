@@ -15,21 +15,21 @@ import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
 import static MassaDeDados.Paths.*;
 import static Utils.Util.converterJsonParaArrayDeBytes;
 
-public class PhonesTests {
+public class DOBTests {
 
     CandidatoService candidatoService = new CandidatoService();
 
     @Test
-    public void criarCandidatoTelefoneInvalidoTamanhoSuperior(){
+    public void criarCandidatoDOBInvalidoTamanhoSuperior(){
 
         /********************************************************************
          Crio um novo candidato válido. *
          ********************************************************************/
         JSONObject candidatoEnviadoParaRequisicao = JsonManipulation
-                .criarJsonCandidato(InvalidacoesCandidato.TELEFONE_ACIMA_TAMANHO_MAXIMO);
+                .criarJsonCandidato(InvalidacoesCandidato.DOB_APOS_DIA_ATUAL);
 
         /********************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um candidato com um TELEFONE de tamanho
+         Executo de fato a operação, tentando cadastrar/criar um candidato com um DOB de tamanho
          superior ao tamanho permitido. Recupero o retorno da requisição para realizar as validações.    *
          *********************************************************************/
         InvalidDTO invalidDTO =
@@ -37,46 +37,20 @@ public class PhonesTests {
                         getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
-                .allMatch(erro -> erro.contains("telefone: O telefone deve ser composto pelo DDD seguido do número, sem simbolos. Ex. DDDDDDDDDDD.")
-                        || erro.contains("telefone: O número deve conter 11 dígitos.")));
-
-
+                .allMatch(erro -> erro.contains("dataNascimento: data de nascimento deve estar no passado")));
     }
 
     @Test
-    public void criarCandidatoTelefoneInvalidoTamanhoInferior(){
+    public void criarCandidatoDOBEmBranco(){
 
         /********************************************************************
          Crio um novo candidato válido. *
          ********************************************************************/
         JSONObject candidatoEnviadoParaRequisicao = JsonManipulation
-                .criarJsonCandidato(InvalidacoesCandidato.TELEFONE_ABAIXO_TAMANHO_MINIMO);
+                .criarJsonCandidato(InvalidacoesCandidato.DOB_EM_BRANCO);
 
         /********************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um candidato com um TELEFONE de tamanho
-         inferior ao tamanho permitido. Recupero o retorno da requisição para realizar as validações.    *
-         *********************************************************************/
-        InvalidDTO invalidDTO =
-                candidatoService.cadastroCandidatoInvalido(converterJsonParaArrayDeBytes(candidatoCriado),
-                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
-
-
-        Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
-                .allMatch(erro -> erro.contains("telefone: O telefone deve ser composto pelo DDD seguido do número, sem simbolos. Ex. DDDDDDDDDDD.")
-                        || erro.contains("telefone: O número deve conter 11 dígitos.")));
-    }
-
-    @Test
-    public void criarCandidatoTelefoneEmBranco(){
-
-        /********************************************************************
-         Crio um novo candidato válido. *
-         ********************************************************************/
-        JSONObject candidatoEnviadoParaRequisicao = JsonManipulation
-                .criarJsonCandidato(InvalidacoesCandidato.TELEFONE_EM_BRANCO);
-
-        /********************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um candidato com um TELEFONE em.
+         Executo de fato a operação, tentando cadastrar/criar um candidato com um DOB em.
          branco. Recupero o retorno da requisição para realizar as validações.    *
          *********************************************************************/
         InvalidDTO invalidDTO =
@@ -84,23 +58,21 @@ public class PhonesTests {
                         getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
-                .allMatch(erro -> erro.contains("telefone: O telefone deve ser composto pelo DDD seguido do número, sem simbolos. Ex. DDDDDDDDDDD.")
-                        || erro.contains("telefone: must not be blank")
-                        || erro.contains("telefone: O número deve conter 11 dígitos.")));
+                .allMatch(erro -> erro.contains("dataNascimento: must not be null")));
     }
 
 
     @Test
-    public void criarCandidatoTelefoneNulo(){
+    public void criarCandidatoDOBNulo(){
 
         /********************************************************************
          Crio um novo candidato válido. *
          ********************************************************************/
         JSONObject candidatoEnviadoParaRequisicao = JsonManipulation
-                .criarJsonCandidato(InvalidacoesCandidato.TELEFONE_NULO);
+                .criarJsonCandidato(InvalidacoesCandidato.DOB_NULO);
 
         /********************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um candidato com um TELEFONE nulo.
+         Executo de fato a operação, tentando cadastrar/criar um candidato com um DOB nulo.
          Recupero o retorno da requisição para realizar as validações.    *
          *********************************************************************/
         InvalidDTO invalidDTO =
@@ -108,7 +80,7 @@ public class PhonesTests {
                         getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
-                .allMatch(erro -> erro.contains("telefone: must not be blank")));
+                .allMatch(erro -> erro.contains("dataNascimento: must not be null")));
 
     }
 

@@ -6,11 +6,7 @@ import Login.service.LoginService;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-
-import static MassaDeDados.PostPaths.*;
 
 public class Util {
 

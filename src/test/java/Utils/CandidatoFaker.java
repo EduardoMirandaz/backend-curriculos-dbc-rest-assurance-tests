@@ -10,20 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CandidatoFaker {
-    static JSONObject preencherCandidatoCompleto(Faker faker, HashMap<String, String> dadosPessoais, JSONObject enderecoJSON, List<JSONObject> escolaridades, List<JSONObject> experiencias) {
-        JSONObject candidatoCompleto = new JSONObject();
-        candidatoCompleto.put("nome", dadosPessoais.get("name"));
-        candidatoCompleto.put("cpf", dadosPessoais.get("cpf"));
-        candidatoCompleto.put("dataNascimento", dadosPessoais.get("dateTime"));
-        candidatoCompleto.put("telefone", dadosPessoais.get("phone"));
-        candidatoCompleto.put("senioridade", Senioridade.PLENO.toString());
-        candidatoCompleto.put("cargo", faker.job().keySkills());
-        candidatoCompleto.put("endereco", enderecoJSON);
-        candidatoCompleto.put("escolaridades", escolaridades);
-        candidatoCompleto.put("experiencias", experiencias);
-        return candidatoCompleto;
-    }
 
+    /***************************************************************************
+     * CRIA OS DADOS PESSOAIS VALIDOS, POIS NAO HÁ PARAMETRO PARA INVALIDACAO
+     */
     static HashMap<String, String> criarDadosPessoais(Faker faker){
         HashMap<String, String> dadosPessoais = new HashMap<>();
         dadosPessoais.put("name", faker.name().fullName());
@@ -32,7 +22,9 @@ public class CandidatoFaker {
         dadosPessoais.put("phone", Geradores.gerarNumeroDeTelefone());
         return dadosPessoais;
     }
-
+    /***************************************************************************
+     * CRIA OS DADOS PESSOAIS INVALIDOS, DEPENDENDO DA INVALIADÇÃO
+     */
     static HashMap<String, String> criarDadosPessoais(Faker faker, InvalidacoesCandidato tipoDeInvalidacao){
         HashMap<String, String> dadosPessoais = new HashMap<>();
 
@@ -40,12 +32,27 @@ public class CandidatoFaker {
 
         popularCPF(dadosPessoais, tipoDeInvalidacao);
 
-
-        dadosPessoais.put("dateTime", Geradores.randomBirthday().toString());
+        popularDOB(dadosPessoais, tipoDeInvalidacao);
 
         popularTelefone(dadosPessoais, tipoDeInvalidacao);
 
         return dadosPessoais;
+    }
+
+
+    private static void popularDOB(HashMap<String, String> dadosPessoais, InvalidacoesCandidato tipoDeInvalidacao) {
+        if(tipoDeInvalidacao == InvalidacoesCandidato.DOB_APOS_DIA_ATUAL){
+            dadosPessoais.put("dateTime", Geradores.randomInvalidBirthday().toString());
+        }
+        else if(tipoDeInvalidacao == InvalidacoesCandidato.DOB_EM_BRANCO){
+            dadosPessoais.put("dateTime", "");
+        }
+        else if(tipoDeInvalidacao == InvalidacoesCandidato.DOB_NULO){
+            dadosPessoais.put("dateTime", null);
+        }
+        else{
+            dadosPessoais.put("dateTime", Geradores.randomBirthday().toString());
+        }
     }
 
     private static void popularTelefone(HashMap<String, String> dadosPessoais, InvalidacoesCandidato tipoDeInvalidacao) {
@@ -85,6 +92,9 @@ public class CandidatoFaker {
 
     }
 
+    /***************************************************************************
+     * CRIA OS DADOS PESSOAIS VALIDOS, POIS NAO HÁ PARAMETRO PARA INVALIDACAO
+     */
     static JSONObject criarEndereco(Faker faker) {
         JSONObject enderecoJSON = new JSONObject();
         enderecoJSON.put("numero", Integer.valueOf(faker.address().buildingNumber()));
@@ -94,6 +104,38 @@ public class CandidatoFaker {
         enderecoJSON.put("cep", Geradores.gerarCEP());
         enderecoJSON.put("estado", Geradores.gerarUF());
         return enderecoJSON;
+    }
+    /***************************************************************************
+     * CRIA OS ENDERECOS PESSOAIS INVALIDOS, DEPENDENDO DA INVALIADÇÃO
+     */
+    static JSONObject criarEndereco(Faker faker, InvalidacoesCandidato tipoInvalidacao) {
+        JSONObject enderecoJSON = new JSONObject();
+        enderecoJSON.put("numero", Integer.valueOf(faker.address().buildingNumber()));
+        enderecoJSON.put("logradouro", faker.address().streetAddress());
+        enderecoJSON.put("bairro", faker.address().cityPrefix());
+        enderecoJSON.put("cidade", faker.address().city());
+        popularCEP(enderecoJSON, tipoInvalidacao);
+        enderecoJSON.put("estado", Geradores.gerarUF());
+        return enderecoJSON;
+    }
+
+    private static void popularCEP(HashMap<String, String> enderecoJSON, InvalidacoesCandidato tipoDeInvalidacao) {
+        if(tipoDeInvalidacao == InvalidacoesCandidato.CEP_ACIMA_TAMANHO_MAXIMO){
+            enderecoJSON.put("cep", Geradores.gerarCEP()+"0");
+        }
+        else if(tipoDeInvalidacao == InvalidacoesCandidato.CEP_ABAIXO_TAMANHO_MINIMO){
+            enderecoJSON.put("cep", Geradores.gerarCEP().substring(1,8));
+        }
+        else if(tipoDeInvalidacao == InvalidacoesCandidato.CEP_EM_BRANCO){
+            enderecoJSON.put("cep", "");
+        }
+        else if(tipoDeInvalidacao == InvalidacoesCandidato.CEP_NULO){
+            enderecoJSON.put("cep", null);
+        }
+        else{
+            enderecoJSON.put("cep", Geradores.gerarCEP());
+        }
+
     }
 
     static JSONObject criarEscolaridade(Faker faker) {
@@ -115,4 +157,19 @@ public class CandidatoFaker {
         experiencia.put("dataFim", Geradores.randomBirthday().toString());
         return experiencia;
     }
+
+    static JSONObject preencherCandidatoCompleto(Faker faker, HashMap<String, String> dadosPessoais, JSONObject enderecoJSON, List<JSONObject> escolaridades, List<JSONObject> experiencias) {
+        JSONObject candidatoCompleto = new JSONObject();
+        candidatoCompleto.put("nome", dadosPessoais.get("name"));
+        candidatoCompleto.put("cpf", dadosPessoais.get("cpf"));
+        candidatoCompleto.put("dataNascimento", dadosPessoais.get("dateTime"));
+        candidatoCompleto.put("telefone", dadosPessoais.get("phone"));
+        candidatoCompleto.put("senioridade", Senioridade.PLENO.toString());
+        candidatoCompleto.put("cargo", faker.job().keySkills());
+        candidatoCompleto.put("endereco", enderecoJSON);
+        candidatoCompleto.put("escolaridades", escolaridades);
+        candidatoCompleto.put("experiencias", experiencias);
+        return candidatoCompleto;
+    }
+
 }

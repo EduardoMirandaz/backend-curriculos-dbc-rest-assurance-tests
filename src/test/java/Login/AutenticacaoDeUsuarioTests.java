@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Map;
 
-import static MassaDeDados.PostPaths.loginCriado;
+import static MassaDeDados.Paths.loginCriado;
 import static Utils.Util.converterJsonParaArrayDeBytes;
 import static Utils.Util.recuperarBearerPeloJSON;
 

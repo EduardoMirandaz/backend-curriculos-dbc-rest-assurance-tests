@@ -1,7 +1,6 @@
 package Utils;
 
-import Login.Enums.TipoDeInvalidacao;
-import MassaDeDados.PostPaths;
+import MassaDeDados.Paths;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.json.simple.JSONObject;
@@ -16,15 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static Login.Enums.TipoDeInvalidacao.*;
-import static Utils.InvalidacoesCandidato.*;
-
 public class JsonManipulation{
 
     public static Map<String, String> criarJsonCadastro(Map<String, String> login){
         // caminho da massa de dados
 
-        String pathJson = PostPaths.loginCriado;
+        String pathJson = Paths.loginCriado;
 
         JSONObject file = new JSONObject();
         file.put("email", login.get("email"));
@@ -45,7 +41,7 @@ public class JsonManipulation{
      */
     public static JSONObject criarJsonCandidato(){
         // caminho da massa de dados
-        String pathJson = PostPaths.candidatoCriado;
+        String pathJson = Paths.candidatoCriado;
 
         // Aqui instancio uma das bibliotecas que gera os dados fakes da aplicação;
         Faker faker = new Faker();
@@ -79,18 +75,18 @@ public class JsonManipulation{
      * Aqui adiciono as invalidações ao JSON que sera enviado para teste;
      *
      */
-    public static JSONObject criarJsonCandidato(InvalidacoesCandidato invalidacoesCandidato){
+    public static JSONObject criarJsonCandidato(InvalidacoesCandidato tipoInvalidacao){
         // caminho da massa de dados
-        String pathJson = PostPaths.candidatoCriado;
+        String pathJson = Paths.candidatoCriado;
 
         // Aqui instancio uma das bibliotecas que gera os dados fakes da aplicação;
         Faker faker = new Faker();
 
         // Aqui populo os dados pessoais como nome, cpf, telefone e data e nascimento.
-        HashMap<String, String> dadosPessoais = CandidatoFaker.criarDadosPessoais(faker, invalidacoesCandidato);
+        HashMap<String, String> dadosPessoais = CandidatoFaker.criarDadosPessoais(faker, tipoInvalidacao);
 
         // Aqui populo os elementos do endereco como cep, logradouro, numero, etc.
-        JSONObject enderecoJSON = CandidatoFaker.criarEndereco(faker);
+        JSONObject enderecoJSON = CandidatoFaker.criarEndereco(faker, tipoInvalidacao);
 
         // Aqui populo ou nao as escolaridades da pessoa, com elementos como instituição de ensino e tempo de permanencia.
         List<JSONObject> escolaridades = new ArrayList<>(List.of(CandidatoFaker.criarEscolaridade(faker)));

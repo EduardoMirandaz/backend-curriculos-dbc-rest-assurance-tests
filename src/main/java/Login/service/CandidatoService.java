@@ -22,7 +22,7 @@ public class CandidatoService {
         return given().
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
-                multiPart("documento", new File("src/test/resources/data/curriculo/curriculo.pdf"), "multipart/form-data").
+                multiPart("documentoValido", new File("src/test/resources/data/curriculo/curriculo.pdf"), "multipart/form-data").
                 multiPart("candidato", jsonBody, "application/json").
                 log().all()
                 .when()
@@ -34,12 +34,12 @@ public class CandidatoService {
                 .extract().as(CandidatoValidoDTO.class);
     }
 
-    public InvalidDTO cadastroCandidatoInvalido(String jsonBody, TokenDTO token, Integer httpStatus) {
+    public InvalidDTO cadastroCandidatoInvalido(String jsonBody, TokenDTO token, Integer httpStatus, String docPath) {
 
         return given().
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
-                multiPart("documento", new File("src/test/resources/data/curriculo/curriculo.pdf"), "multipart/form-data").
+                multiPart("documentoValido", new File(docPath), "multipart/form-data").
                 multiPart("candidato", jsonBody, "application/json").
                 log().all()
                 .when()
@@ -112,4 +112,17 @@ public class CandidatoService {
                 .statusCode(403);
     }
 
+    public void cadastroCandidatoSemCurriculo(String jsonBody, TokenDTO token, Integer httpStatus, String docPath) {
+        given().
+                header("content-type", "multipart/form-data").
+                header("Authorization", token.getToken()).
+                multiPart("candidato", jsonBody, "application/json").
+                log().all()
+                .when()
+                .post(baseUrl)
+                .then()
+                .log()
+                .all()
+                .statusCode(httpStatus);
+    }
 }

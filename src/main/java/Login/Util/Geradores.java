@@ -79,6 +79,9 @@ public class Geradores {
     public static LocalDate randomBirthday() {
         return LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70))));
     }
+    public static LocalDate randomInvalidBirthday() {
+        return LocalDate.now().plus(Period.ofDays((new Random().nextInt(365 * 70))));
+    }
 
     public static String gerarNumeroDeTelefone(){
         Random gerador = new Random();
@@ -86,26 +89,6 @@ public class Geradores {
         return Double.toString(phone).substring(2,13);
     }
 
-    public static String gerarNumeroDeTelefone(TipoDeInvalidacao tipoDeInvalidacao){
-        Random gerador = new Random();
-        double phone = gerador.nextDouble();
-        if(tipoDeInvalidacao == TipoDeInvalidacao.ABAIXO_TAMANHO_MINIMO){
-            return Double.toString(phone).substring(2,12);
-        }
-        else if(tipoDeInvalidacao == TipoDeInvalidacao.NULO){
-            return null;
-        }
-        else if(tipoDeInvalidacao == TipoDeInvalidacao.ACIMA_TAMANHO_MAXIMO){
-            return Double.toString(phone).substring(2,14);
-        }
-        else if(tipoDeInvalidacao == TipoDeInvalidacao.SOMENTESIMBOLOS){
-            return "(@*#&¨%$)!@";
-        }
-        else if(tipoDeInvalidacao == TipoDeInvalidacao.EMBRANCO){
-            return "           ";
-        }
-        return null;
-    }
 
     public static String gerarCEP() {
         String cepsValidosPath = "src/test/java/MassaDeDados/cepsValidos";

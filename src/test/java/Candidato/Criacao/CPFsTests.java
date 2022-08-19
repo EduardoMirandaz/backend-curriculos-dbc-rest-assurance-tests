@@ -12,7 +12,8 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
-import static MassaDeDados.PostPaths.candidatoCriado;
+import static MassaDeDados.Paths.candidatoCriado;
+import static MassaDeDados.Paths.documentoValido;
 import static Utils.Util.converterJsonParaArrayDeBytes;
 
 public class CPFsTests {
@@ -34,7 +35,7 @@ public class CPFsTests {
          *********************************************************************/
         InvalidDTO invalidDTO =
                 candidatoService.cadastroCandidatoInvalido(converterJsonParaArrayDeBytes(candidatoCriado),
-                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST);
+                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("cpf: O CPF deve ser válido.")));
@@ -56,7 +57,7 @@ public class CPFsTests {
          *********************************************************************/
         InvalidDTO invalidDTO =
                 candidatoService.cadastroCandidatoInvalido(converterJsonParaArrayDeBytes(candidatoCriado),
-                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST);
+                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("cpf: O CPF deve ser válido.")));
@@ -78,7 +79,7 @@ public class CPFsTests {
          *********************************************************************/
         InvalidDTO invalidDTO =
                 candidatoService.cadastroCandidatoInvalido(converterJsonParaArrayDeBytes(candidatoCriado),
-                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST);
+                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("cpf: must not be blank")
@@ -102,7 +103,7 @@ public class CPFsTests {
          *********************************************************************/
         InvalidDTO invalidDTO =
                 candidatoService.cadastroCandidatoInvalido(converterJsonParaArrayDeBytes(candidatoCriado),
-                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST);
+                        getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoValido);
 
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("cpf: must not be blank")));
