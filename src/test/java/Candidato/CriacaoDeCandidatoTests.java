@@ -1,8 +1,12 @@
 package Candidato;
 
+import Login.Enums.TipoDeInvalidacao;
 import Login.dto.CandidatoValidoDTO;
+import Login.dto.InvalidDTO;
 import Login.service.CandidatoService;
+import Utils.InvalidacoesCandidato;
 import Utils.JsonManipulation;
+import org.apache.http.HttpStatus;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -65,6 +69,31 @@ public class CriacaoDeCandidatoTests {
                         candidato -> candidato.getIdCandidato().equals(candidatoValidoDTO.getIdCandidato())));
 
     }
+
+
+
+    @Test
+    public void criarCandidatoRepetido(){
+
+        /********************************************************************
+         Crio um novo candidato válido. *
+         ********************************************************************/
+        JSONObject candidatoEnviadoParaRequisicao = JsonManipulation
+                .criarJsonCandidato();
+        candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),getAuthenticatedToken());
+
+        /********************************************************************
+         Executo de fato a operação, tentando cadastrar/criar um candidato com um CPF já existente no banco
+         inferior ao tamanho permitido. Recupero o retorno da requisição para realizar as validações.    *
+         *********************************************************************/
+
+        InvalidDTO invalidDTO = candidatoService.cadastroCandidatoInvalido(converterJsonParaArrayDeBytes(candidatoCriado), getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST);
+
+        Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
+                .allMatch(erro -> erro.contains("CPF já cadastrado e número já cadastrado.")));
+
+    }
+
 
     static CandidatoValidoDTO cadastrarCandidato() {
         JsonManipulation.criarJsonCandidato();

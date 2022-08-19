@@ -1,7 +1,7 @@
 package Utils;
 
-import Login.Enums.Senioridade;
-import Login.Util.Geradores;
+import Login.Enums.TipoDeInvalidacao;
+import MassaDeDados.PostPaths;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.json.simple.JSONObject;
@@ -16,12 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static Login.Enums.TipoDeInvalidacao.*;
+import static Utils.InvalidacoesCandidato.*;
+
 public class JsonManipulation{
 
     public static Map<String, String> criarJsonCadastro(Map<String, String> login){
         // caminho da massa de dados
 
-        String pathJson = "src/test/resources/data/login/loginCriado.json";
+        String pathJson = PostPaths.loginCriado;
 
         JSONObject file = new JSONObject();
         file.put("email", login.get("email"));
@@ -35,56 +38,69 @@ public class JsonManipulation{
         return login;
     }
 
+    /**************************************************************************
+     * Ao chamar esse método sem passar invalidacoes como parametro, retorno um
+     * candidato populado corretamente, ou seja, um candidato válido.
+     *
+     */
     public static JSONObject criarJsonCandidato(){
         // caminho da massa de dados
-        String pathJson = "src/test/resources/data/login/candidatoCriado.json";
+        String pathJson = PostPaths.candidatoCriado;
 
+        // Aqui instancio uma das bibliotecas que gera os dados fakes da aplicação;
         Faker faker = new Faker();
 
-        String name = faker.name().fullName();
-        String cpf = Geradores.cpf(false);
-        String dateTime = Geradores.randomBirthday().toString();
-        String phone = Geradores.gerarNumeroDeTelefone();
+        // Aqui populo os dados pessoais como nome, cpf, telefone e data e nascimento.
+        HashMap<String, String> dadosPessoais = CandidatoFaker.criarDadosPessoais(faker);
 
-        JSONObject enderecoJSON = new JSONObject();
-        enderecoJSON.put("numero", Integer.valueOf(faker.address().buildingNumber()));
-        enderecoJSON.put("logradouro", faker.address().streetAddress());
-        enderecoJSON.put("bairro", faker.address().cityPrefix());
-        enderecoJSON.put("cidade", faker.address().city());
-        enderecoJSON.put("cep", Geradores.gerarCEP());
-        enderecoJSON.put("estado", Geradores.gerarUF());
+        // Aqui populo os elementos do endereco como cep, logradouro, numero, etc.
+        JSONObject enderecoJSON = CandidatoFaker.criarEndereco(faker);
+
+        // Aqui populo ou nao as escolaridades da pessoa, com elementos como instituição de ensino e tempo de permanencia.
+        List<JSONObject> escolaridades = new ArrayList<>(List.of(CandidatoFaker.criarEscolaridade(faker)));
+
+        // Aqui populo ou nao as experiencias da pessoa, com elementos como empresas antigas e cargo de ocupação.
+        List<JSONObject> experiencias = new ArrayList<>(List.of(CandidatoFaker.criarExperiencia(faker)));
+
+        // Por fim monto o JSON final com o candidato completo, para retornar para o método anterior que chamará a re-
+        // quisicao e para salvar o objeto em um arquivo JSON nas resources da aplicação;
+        JSONObject candidatoCompleto = CandidatoFaker.preencherCandidatoCompleto(faker, dadosPessoais, enderecoJSON, escolaridades, experiencias);
+
+        try (PrintWriter out = new PrintWriter(new FileWriter(pathJson))) {
+            out.write(candidatoCompleto.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return candidatoCompleto;
+    }
 
 
-        JSONObject escolaridade1 = new JSONObject();
-        escolaridade1.put("instituicao", faker.company().name());
-        escolaridade1.put("descricao", faker.pokemon().name());
-        escolaridade1.put("nivel", faker.job().keySkills());
-        escolaridade1.put("dataInicio", Geradores.randomBirthday().toString());
-        escolaridade1.put("dataFim", Geradores.randomBirthday().toString());
+    /**************************************************************************
+     * Aqui adiciono as invalidações ao JSON que sera enviado para teste;
+     *
+     */
+    public static JSONObject criarJsonCandidato(InvalidacoesCandidato invalidacoesCandidato){
+        // caminho da massa de dados
+        String pathJson = PostPaths.candidatoCriado;
 
-        List<JSONObject> escolaridades = new ArrayList<>();
-        escolaridades.add(escolaridade1);
+        // Aqui instancio uma das bibliotecas que gera os dados fakes da aplicação;
+        Faker faker = new Faker();
 
-        JSONObject experiencia1 = new JSONObject();
-        experiencia1.put("instituicao", faker.company().name());
-        experiencia1.put("descricao", faker.pokemon().name());
-        experiencia1.put("cargo", faker.job().keySkills());
-        experiencia1.put("dataInicio", Geradores.randomBirthday().toString());
-        experiencia1.put("dataFim", Geradores.randomBirthday().toString());
+        // Aqui populo os dados pessoais como nome, cpf, telefone e data e nascimento.
+        HashMap<String, String> dadosPessoais = CandidatoFaker.criarDadosPessoais(faker, invalidacoesCandidato);
 
-        List<JSONObject> experiencias = new ArrayList<>();
-        experiencias.add(experiencia1);
+        // Aqui populo os elementos do endereco como cep, logradouro, numero, etc.
+        JSONObject enderecoJSON = CandidatoFaker.criarEndereco(faker);
 
-        JSONObject candidatoCompleto = new JSONObject();
-        candidatoCompleto.put("nome", name);
-        candidatoCompleto.put("cpf", cpf);
-        candidatoCompleto.put("dataNascimento", dateTime);
-        candidatoCompleto.put("telefone", phone);
-        candidatoCompleto.put("senioridade", Senioridade.PLENO.toString());
-        candidatoCompleto.put("cargo", faker.job().keySkills());
-        candidatoCompleto.put("endereco", enderecoJSON);
-        candidatoCompleto.put("escolaridades", escolaridades);
-        candidatoCompleto.put("experiencias", experiencias);
+        // Aqui populo ou nao as escolaridades da pessoa, com elementos como instituição de ensino e tempo de permanencia.
+        List<JSONObject> escolaridades = new ArrayList<>(List.of(CandidatoFaker.criarEscolaridade(faker)));
+
+        // Aqui populo ou nao as experiencias da pessoa, com elementos como empresas antigas e cargo de ocupação.
+        List<JSONObject> experiencias = new ArrayList<>(List.of(CandidatoFaker.criarExperiencia(faker)));
+
+        // Por fim monto o JSON final com o candidato completo, para retornar para o método anterior que chamará a re-
+        // quisicao e para salvar o objeto em um arquivo JSON nas resources da aplicação;
+        JSONObject candidatoCompleto = CandidatoFaker.preencherCandidatoCompleto(faker, dadosPessoais, enderecoJSON, escolaridades, experiencias);
 
         try (PrintWriter out = new PrintWriter(new FileWriter(pathJson))) {
             out.write(candidatoCompleto.toString());
@@ -96,8 +112,8 @@ public class JsonManipulation{
 
 
     public static Map<String, String> recuperarCadastro(){
-        // caminho da massa de dados
 
+        // caminho da massa de dados
         String pathJson = "src/test/resources/data/login/loginCriado.json";
 
         // Recuperando o usuario completo em formato de json

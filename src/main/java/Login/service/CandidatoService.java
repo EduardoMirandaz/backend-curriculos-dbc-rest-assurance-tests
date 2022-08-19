@@ -34,6 +34,23 @@ public class CandidatoService {
                 .extract().as(CandidatoValidoDTO.class);
     }
 
+    public InvalidDTO cadastroCandidatoInvalido(String jsonBody, TokenDTO token, Integer httpStatus) {
+
+        return given().
+                header("content-type", "multipart/form-data").
+                header("Authorization", token.getToken()).
+                multiPart("documento", new File("src/test/resources/data/curriculo/curriculo.pdf"), "multipart/form-data").
+                multiPart("candidato", jsonBody, "application/json").
+                log().all()
+                .when()
+                .post(baseUrl)
+                .then()
+                .log()
+                .all()
+                .statusCode(httpStatus)
+                .extract().as(InvalidDTO.class);
+    }
+
 
     public CandidatoValidoDTO[] recuperarCandidatosAutenticado(TokenDTO token) {
         return given().
