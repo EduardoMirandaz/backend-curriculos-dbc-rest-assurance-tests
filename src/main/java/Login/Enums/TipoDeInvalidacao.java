@@ -1,0 +1,12 @@
+package Login.Enums;
+
+public enum TipoDeInvalidacao {
+    ACIMA_TAMANHO_MAXIMO,
+    ABAIXO_TAMANHO_MINIMO,
+    NULO,
+    EMAILSEMDOMINIO,
+    SEMPONTO,
+    SOMENTESIMBOLOS,
+    SOMENTENUMEROS,
+    EMBRANCO
+}
