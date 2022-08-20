@@ -7,6 +7,8 @@ public class Paths {
     public static final String candidatoEditado = "src/test/resources/data/candidato/candidatoEditado.json";
 
     public static final String documentoValido = "src/test/resources/data/candidato/curriculo.pdf";
+    public static final String documentoValido2 = "src/test/resources/data/candidato/curriculo2.pdf";
+
     public static final String documentoInvalido = "src/test/java/MassaDeDados/cepsValidos";
 
 }

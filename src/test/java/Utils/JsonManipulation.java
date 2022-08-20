@@ -6,6 +6,7 @@ import Utils.Enums.AtributoASerEditado;
 import Utils.Enums.InvalidacoesCandidato;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -137,7 +138,7 @@ public class JsonManipulation{
             }
             case DOB -> {
                 candidatoRecuperado.replace("dataNascimento", candidatoRecuperado.get("dataNascimento"),
-                        Geradores.randomBirthday());
+                        Geradores.randomBirthday().toString());
             }
             case ENDERECO -> {
                 candidatoRecuperado.replace("endereco", candidatoRecuperado.get("endereco"),
@@ -148,8 +149,11 @@ public class JsonManipulation{
                         Geradores.gerarNumeroDeTelefone());
             }
             case EXPERIENCIAS -> {
-                candidatoRecuperado.replace("experiencia", candidatoRecuperado.get("experiencia"),
-                        CandidatoFaker.criarEndereco(faker));
+                List<JSONObject> experiencias = (ArrayList<JSONObject>) candidatoRecuperado.get("experiencias");
+
+                experiencias.add(CandidatoFaker.criarExperiencia(faker));
+
+                candidatoRecuperado.replace("experiencias", candidatoRecuperado.get("experiencias"), experiencias);
             }
         }
         candidatoRecuperado.put("idCandidato", idCandidato);
@@ -163,7 +167,7 @@ public class JsonManipulation{
         return candidatoRecuperado;
     }
 
-    private static JSONObject recuperarJSONObject(String jsonPath){
+    public static JSONObject recuperarJSONObject(String jsonPath){
         Object parse = null;
         try {
             parse = JSONValue.parse(new FileReader(

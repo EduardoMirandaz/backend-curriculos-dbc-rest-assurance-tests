@@ -1,4 +1,4 @@
-package Candidato.Criacao;
+package Candidato;
 
 import Login.dto.InvalidDTO;
 import Login.service.CandidatoService;

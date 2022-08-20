@@ -142,4 +142,37 @@ public class CandidatoService {
     }
 
 
+    public String edicaoCurriculoValido(Integer idCandidato, TokenDTO token, String documentoValidoPath) {
+        return given().
+                header("content-type", "multipart/form-data").
+                header("Authorization", token.getToken()).
+                multiPart("idCandidato", idCandidato, "application/json").
+                multiPart("documento", new File(documentoValidoPath), "multipart/form-data").
+                log().all()
+                .when()
+                .put(baseUrl + "/update-documento/" + idCandidato)
+                .then()
+                .log()
+                .all()
+                .statusCode(200)
+                .extract().asString();
+    }
+
+    public InvalidDTO edicaoCurriculoCandidatoInvalido(Integer idCandidato, TokenDTO token, Integer httpStatusExpected,
+                                                       String documentoValidoPath) {
+        return given().
+                header("content-type", "multipart/form-data").
+                header("Authorization", token.getToken()).
+                multiPart("idCandidato", idCandidato, "application/json").
+                multiPart("documento", new File(documentoValidoPath), "multipart/form-data").
+                log().all()
+                .when()
+                .put(baseUrl + "/update-documento/" + idCandidato)
+                .then()
+                .log()
+                .all()
+                .statusCode(httpStatusExpected)
+                .extract().as(InvalidDTO.class);
+    }
+
 }
