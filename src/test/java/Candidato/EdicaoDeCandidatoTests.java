@@ -16,8 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static Candidato.CriacaoDeCandidatoTests.cadastrarCandidato;
+import static Candidato.DelecaoDeCandidatoTests.deletarCandidato;
 import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
-import static MassaDeDados.Paths.*;
+import static MassaDeDados.Paths.candidatoEditado;
+import static MassaDeDados.Paths.documentoValido2;
 import static Utils.Util.converterJsonParaArrayDeBytes;
 
 public class EdicaoDeCandidatoTests {
@@ -93,6 +95,11 @@ public class EdicaoDeCandidatoTests {
                 anyMatch(
                         candidato -> candidato.getIdCandidato().equals(candidatoEditadoRetornado.getIdCandidato())));
 
+
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoCriado.getIdCandidato());
     }
 
     @Test
@@ -164,6 +171,11 @@ public class EdicaoDeCandidatoTests {
                 anyMatch(
                         candidato -> candidato.getIdCandidato().equals(candidatoEditadoRetornado.getIdCandidato())));
 
+
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoCriado.getIdCandidato());
     }
 
     @Test
@@ -235,6 +247,11 @@ public class EdicaoDeCandidatoTests {
                 anyMatch(
                         candidato -> candidato.getIdCandidato().equals(candidatoEditadoRetornado.getIdCandidato())));
 
+
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoCriado.getIdCandidato());
     }
 
     @Test
@@ -311,6 +328,11 @@ public class EdicaoDeCandidatoTests {
                 anyMatch(
                         candidato -> candidato.getIdCandidato().equals(candidatoEditadoRetornado.getIdCandidato())));
 
+
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoCriado.getIdCandidato());
     }
 
     @Test
@@ -393,6 +415,11 @@ public class EdicaoDeCandidatoTests {
                 anyMatch(
                         candidato -> candidato.getIdCandidato().equals(candidatoEditadoRetornado.getIdCandidato())));
 
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoCriado.getIdCandidato());
+
     }
 
     @Test
@@ -422,6 +449,10 @@ public class EdicaoDeCandidatoTests {
         // verificando que o url do documento retornado não é nulo.
         Assert.assertNotNull( urlCurriculoAlterado );
 
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoCriado.getIdCandidato());
     }
 
     @Test
@@ -444,30 +475,6 @@ public class EdicaoDeCandidatoTests {
 
     }
 
-//    @Test
-//    public void editarCurriculoCandidatoArquivoInvalido(){
-//
-//        /********************************************************************
-//         Crio um novo candidato válido. *
-//         ********************************************************************/
-//        CandidatoValidoDTO candidatoCriado = cadastrarCandidato();
-//        Integer idCandidatoASerEditado = candidatoCriado.getIdCandidato();
-//
-//        /********************************************************************
-//         Executo de fato a operação, tentando editar o candidato que criei. *
-//         Recupero o retorno da requisição para realizar as validações.    *
-//         *********************************************************************/
-//
-//        InvalidDTO invalidDTO = candidatoService.edicaoCurriculoCandidatoInvalido(idCandidatoASerEditado,
-//                getAuthenticatedToken(), HttpStatus.SC_NOT_FOUND, documentoInvalido);
-//
-//        /**************************************************************************
-//         Realizando a validação de que a imagem nao foi editada.
-//         **************************************************************************/
-//        Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
-//                .allMatch(erro -> erro.contains("Candidato não encontrado")));
-//
-//    }
 
 
 }

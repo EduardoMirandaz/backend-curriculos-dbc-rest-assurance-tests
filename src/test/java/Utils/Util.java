@@ -10,10 +10,6 @@ import java.util.UUID;
 
 public class Util {
 
-    public static String dataNascimentoInvalida = "dataNascimento: must not be null";
-    public static String nomeInvalido = "nome: must not be blank";
-    public static String idPessoaNaoEncontrado = "ID da pessoa nao encontrada";
-
     static LoginService loginService = new LoginService();
 
     public static String gerarLoginRandomico(){

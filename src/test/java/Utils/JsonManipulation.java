@@ -6,7 +6,6 @@ import Utils.Enums.AtributoASerEditado;
 import Utils.Enums.InvalidacoesCandidato;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 

@@ -3,10 +3,9 @@ package Login.dto;
 
 import Login.Enums.Senioridade;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import lombok.Getter;
 
 import java.time.LocalDate;
 

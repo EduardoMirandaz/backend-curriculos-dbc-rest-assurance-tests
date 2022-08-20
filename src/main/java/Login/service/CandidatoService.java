@@ -1,14 +1,12 @@
 package Login.service;
 
-import Login.dto.*;
-import io.restassured.RestAssured;
-import io.restassured.config.EncoderConfig;
+import Login.dto.CandidatoCompletoDTO;
+import Login.dto.CandidatoValidoDTO;
+import Login.dto.InvalidDTO;
+import Login.dto.TokenDTO;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 

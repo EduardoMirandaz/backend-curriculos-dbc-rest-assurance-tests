@@ -14,7 +14,7 @@ import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
 public class DelecaoDeCandidatoTests {
 
 
-    CandidatoService candidatoService = new CandidatoService();
+    static CandidatoService candidatoService = new CandidatoService();
 
     @Test
     public void deletarCandidatoValido(){
@@ -28,7 +28,7 @@ public class DelecaoDeCandidatoTests {
          Recupera o id do candidato criado e o remove. *
          ********************************************************************/
         Integer idCandidato = candidatoValidoDTO.getIdCandidato();
-        candidatoService.deletarCandidatoValido(getAuthenticatedToken(), idCandidato);
+        deletarCandidato(idCandidato);
 
         /**************************************************************************************************************
          Validacoes: recupero os candidatos cadastrados e verifico que nao é possível encontrar o que eu exclui. *
@@ -42,6 +42,10 @@ public class DelecaoDeCandidatoTests {
                         candidato -> candidato.getIdCandidato().equals(idCandidato)))
                 ;
 
+    }
+
+    public static void deletarCandidato(Integer idCandidato) {
+        candidatoService.deletarCandidatoValido(getAuthenticatedToken(), idCandidato);
     }
 
     @Test
@@ -108,7 +112,7 @@ public class DelecaoDeCandidatoTests {
 
 
         // por fim, apago de maneira válida o usuário criado para encerrar o ciclo do teste.
-        candidatoService.deletarCandidatoValido(getAuthenticatedToken(), idCandidato);
+        deletarCandidato(idCandidato);
 
     }
 

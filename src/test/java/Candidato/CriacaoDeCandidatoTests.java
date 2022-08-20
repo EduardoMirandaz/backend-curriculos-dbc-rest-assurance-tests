@@ -3,15 +3,16 @@ package Candidato;
 import Login.dto.CandidatoValidoDTO;
 import Login.dto.InvalidDTO;
 import Login.service.CandidatoService;
-import MassaDeDados.Paths;
 import Utils.JsonManipulation;
 import org.apache.http.HttpStatus;
 import org.json.simple.JSONObject;
+import org.junit.Before;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 
+import static Candidato.DelecaoDeCandidatoTests.deletarCandidato;
 import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
 import static MassaDeDados.Paths.*;
 import static Utils.Util.converterJsonParaArrayDeBytes;
@@ -19,6 +20,9 @@ import static Utils.Util.converterJsonParaArrayDeBytes;
 public class CriacaoDeCandidatoTests {
 
     static CandidatoService candidatoService = new CandidatoService();
+
+
+    @Before
 
     @Test
     public void criarCandidatoValido(){
@@ -67,6 +71,10 @@ public class CriacaoDeCandidatoTests {
                 anyMatch(
                         candidato -> candidato.getIdCandidato().equals(candidatoValidoDTO.getIdCandidato())));
 
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoValidoDTO.getIdCandidato());
     }
 
     @Test
@@ -76,7 +84,8 @@ public class CriacaoDeCandidatoTests {
          Crio um novo candidato válido. *
          ********************************************************************/
         JsonManipulation.criarJsonCandidato();
-        candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),getAuthenticatedToken(), documentoValido);
+        CandidatoValidoDTO candidatoValidoDTO = candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado)
+                , getAuthenticatedToken(), documentoValido);
 
         /********************************************************************
          Executo de fato a operação, tentando cadastrar/criar um candidato com um CPF já existente no banco
@@ -89,6 +98,10 @@ public class CriacaoDeCandidatoTests {
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("CPF já cadastrado e número já cadastrado.")));
 
+        /**************************
+         * Deletando o candidato após o teste, para nao poluir o banco.
+         */
+        deletarCandidato(candidatoValidoDTO.getIdCandidato());
     }
 
     @Test
@@ -110,7 +123,26 @@ public class CriacaoDeCandidatoTests {
 
     }
 
-    static CandidatoValidoDTO cadastrarCandidato() {
+    @Test
+    public void criarCandidatoCurriculoNulo(){
+
+        /********************************************************************
+         Crio um novo candidato válido. *
+         ********************************************************************/
+        JsonManipulation.criarJsonCandidato();
+
+        /********************************************************************
+         Executo de fato a operação, tentando cadastrar/criar um candidato sem documentoValido anexado.
+         ecupero o retorno da requisição para realizar as validações.    *
+         *********************************************************************/
+
+        candidatoService.cadastroCandidatoSemCurriculo(converterJsonParaArrayDeBytes(candidatoCriado),
+                getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoVazio);
+
+
+    }
+
+    public static CandidatoValidoDTO cadastrarCandidato() {
         JsonManipulation.criarJsonCandidato();
         return candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),
                 getAuthenticatedToken(), documentoValido);

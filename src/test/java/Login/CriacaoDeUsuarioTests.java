@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Map;
 
-import static MassaDeDados.Paths.*;
+import static MassaDeDados.Paths.loginCriado;
 import static Utils.Util.converterJsonParaArrayDeBytes;
 
 public class CriacaoDeUsuarioTests {

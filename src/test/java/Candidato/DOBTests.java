@@ -12,7 +12,8 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
-import static MassaDeDados.Paths.*;
+import static MassaDeDados.Paths.candidatoCriado;
+import static MassaDeDados.Paths.documentoValido;
 import static Utils.Util.converterJsonParaArrayDeBytes;
 
 public class DOBTests {
