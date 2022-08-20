@@ -3,6 +3,7 @@ package Utils;
 import Login.Enums.Senioridade;
 
 import Login.Util.Geradores;
+import Utils.Enums.InvalidacoesCandidato;
 import com.github.javafaker.Faker;
 import org.json.simple.JSONObject;
 

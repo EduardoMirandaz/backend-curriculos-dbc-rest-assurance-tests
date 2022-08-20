@@ -1,4 +1,4 @@
-package Utils;
+package Utils.Enums;
 
 public enum InvalidacoesCandidato {
     CPF_ABAIXO_TAMANHO_MINIMO,

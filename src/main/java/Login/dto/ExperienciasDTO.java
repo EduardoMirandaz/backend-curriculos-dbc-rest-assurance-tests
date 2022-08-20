@@ -15,5 +15,12 @@ public class ExperienciasDTO {
     private String cargo;
     private LocalDate dataInicio;
     private LocalDate dataFim;
+    private Integer idExperiencia;
+
+    @Override
+    public String toString(){
+        return "{\"dataFim\":\"" + dataFim + "\",\"instituicao\":\"" + instituicao + "\",\"dataInicio\":\"" + dataInicio +
+                "\",\"cargo\":\""+cargo+"\",\"descricao\":\""+descricao+"\"}";
+    }
 
 }

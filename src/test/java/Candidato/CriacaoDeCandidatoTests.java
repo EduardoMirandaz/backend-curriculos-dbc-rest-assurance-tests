@@ -3,6 +3,7 @@ package Candidato;
 import Login.dto.CandidatoValidoDTO;
 import Login.dto.InvalidDTO;
 import Login.service.CandidatoService;
+import MassaDeDados.Paths;
 import Utils.JsonManipulation;
 import org.apache.http.HttpStatus;
 import org.json.simple.JSONObject;
@@ -34,14 +35,14 @@ public class CriacaoDeCandidatoTests {
          *********************************************************************/
         CandidatoValidoDTO candidatoValidoDTO =
                 candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),
-                        getAuthenticatedToken());
+                        getAuthenticatedToken(), documentoValido);
 
 
 
         /**************************************************************************
          Realizando a validação de que os campos criados conferem com os enviados.*
          **************************************************************************/
-        // verificando que o ID gerado não é nulo.
+        // verificando que o ID retornado não é nulo.
         Assert.assertNotNull( candidatoValidoDTO.getIdCandidato());
 
         Assert.assertEquals( candidatoEnviadoParaRequisicao.get("nome"),
@@ -75,7 +76,7 @@ public class CriacaoDeCandidatoTests {
          Crio um novo candidato válido. *
          ********************************************************************/
         JsonManipulation.criarJsonCandidato();
-        candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),getAuthenticatedToken());
+        candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),getAuthenticatedToken(), documentoValido);
 
         /********************************************************************
          Executo de fato a operação, tentando cadastrar/criar um candidato com um CPF já existente no banco
@@ -112,7 +113,7 @@ public class CriacaoDeCandidatoTests {
     static CandidatoValidoDTO cadastrarCandidato() {
         JsonManipulation.criarJsonCandidato();
         return candidatoService.cadastroCandidatoValido(converterJsonParaArrayDeBytes(candidatoCriado),
-                getAuthenticatedToken());
+                getAuthenticatedToken(), documentoValido);
     }
 
 }

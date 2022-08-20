@@ -27,22 +27,6 @@ public class Util {
         return bearer.getToken().replace("Bearer ", "");
     }
 
-//    public static String loginAdmin(){
-//        String bearer = recuperarBearerPeloJSON(adminLoginPostPath);
-//        return bearer.replace("Bearer ", "");
-//    }
-
-//    private Map<String, String> mapPessoaPostDTO(PessoaValidPostDTO pessoaValidPostDTO) {
-//        Map<String, String> pessoaMapeada = new HashMap<>();
-//        pessoaMapeada.put("nome", pessoaValidPostDTO.getNome());
-//        pessoaMapeada.put("dataNascimento", pessoaValidPostDTO.getDataNascimento().toString());
-//        pessoaMapeada.put("cpf", pessoaValidPostDTO.getCpf());
-//        pessoaMapeada.put("email", pessoaValidPostDTO.getEmail());
-//        pessoaMapeada.put("idPessoa", pessoaValidPostDTO.getIdPessoa().toString());
-//
-//        return  pessoaMapeada;
-//    }
-
     public static String converterJsonParaArrayDeBytes(String pathJson){
         // caminho da massa de dados
         try {

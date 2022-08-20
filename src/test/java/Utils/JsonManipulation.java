@@ -1,6 +1,9 @@
 package Utils;
 
+import Login.Util.Geradores;
 import MassaDeDados.Paths;
+import Utils.Enums.AtributoASerEditado;
+import Utils.Enums.InvalidacoesCandidato;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.json.simple.JSONObject;
@@ -123,6 +126,41 @@ public class JsonManipulation{
 
         return login;
 
+    }
+
+    public static JSONObject criarJsonCandidatoEditado(AtributoASerEditado atributo, Integer idCandidato) {
+        JSONObject candidatoRecuperado = recuperarJSONObject(Paths.candidatoCriado);
+        Faker faker = new Faker();
+        switch (atributo){
+            case NOME -> {
+                candidatoRecuperado.replace("nome", candidatoRecuperado.get("nome"), faker.name().fullName());
+            }
+            case DOB -> {
+                candidatoRecuperado.replace("dataNascimento", candidatoRecuperado.get("dataNascimento"),
+                        Geradores.randomBirthday());
+            }
+            case ENDERECO -> {
+                candidatoRecuperado.replace("endereco", candidatoRecuperado.get("endereco"),
+                        CandidatoFaker.criarEndereco(faker));
+            }
+            case TELEFONE -> {
+                candidatoRecuperado.replace("telefone", candidatoRecuperado.get("telefone"),
+                        Geradores.gerarNumeroDeTelefone());
+            }
+            case EXPERIENCIAS -> {
+                candidatoRecuperado.replace("experiencia", candidatoRecuperado.get("experiencia"),
+                        CandidatoFaker.criarEndereco(faker));
+            }
+        }
+        candidatoRecuperado.put("idCandidato", idCandidato);
+
+        try (PrintWriter out = new PrintWriter(new FileWriter(Paths.candidatoEditado))) {
+            out.write(candidatoRecuperado.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return candidatoRecuperado;
     }
 
     private static JSONObject recuperarJSONObject(String jsonPath){

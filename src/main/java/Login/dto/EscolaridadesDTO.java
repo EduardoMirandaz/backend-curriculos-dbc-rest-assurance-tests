@@ -1,7 +1,6 @@
 package Login.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.github.javafaker.DateAndTime;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -15,5 +14,11 @@ public class EscolaridadesDTO {
     private String nivel;
     private LocalDate dataInicio;
     private LocalDate dataFim;
+    private Integer idEscolaridade;
 
+    @Override
+    public String toString(){
+        return "{\"dataFim\":\"" + dataFim + "\",\"instituicao\":\"" + instituicao + "\",\"dataInicio\":\"" + dataInicio +
+                "\",\"nivel\":\""+nivel+"\",\"descricao\":\""+descricao+"\"}";
+    }
 }

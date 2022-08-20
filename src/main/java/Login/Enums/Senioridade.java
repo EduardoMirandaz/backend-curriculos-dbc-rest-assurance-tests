@@ -1,5 +1,5 @@
 package Login.Enums;
 
 public enum Senioridade {
-    JUNIOR, PLENO, SENIOR
+    JUNIOR, PLENO, SENIOR, ESPECIALISTA
 }

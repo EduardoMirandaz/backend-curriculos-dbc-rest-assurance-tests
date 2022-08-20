@@ -2,7 +2,7 @@ package Candidato.Criacao;
 
 import Login.dto.InvalidDTO;
 import Login.service.CandidatoService;
-import Utils.InvalidacoesCandidato;
+import Utils.Enums.InvalidacoesCandidato;
 import Utils.JsonManipulation;
 import org.apache.http.HttpStatus;
 import org.json.simple.JSONObject;

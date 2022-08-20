@@ -12,4 +12,12 @@ public class EnderecoDTO {
     private String cidade;
     private String cep;
     private String estado;
+    private Integer idEndereco;
+
+
+    @Override
+    public String toString(){
+        return "{\"cidade\":\"" + cidade + "\",\"estado\":\"" + estado + "\",\"numero\":" + numero +
+                ",\"logradouro\":\""+logradouro+"\",\"bairro\":\""+bairro+"\",\"cep\":\""+cep+"\"}";
+    }
 }

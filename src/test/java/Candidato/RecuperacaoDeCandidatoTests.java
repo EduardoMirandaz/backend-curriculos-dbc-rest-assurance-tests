@@ -26,7 +26,7 @@ public class RecuperacaoDeCandidatoTests {
         /**************************************************************************
          Realizando a validação de que os campos criados nao sao nulos.*
          **************************************************************************/
-        // verificando que o ID gerado não é nulo.
+        // verificando que o ID retornado não é nulo.
         Assert.assertNotNull( candidatosRecuperados[0].getIdCandidato());
 
         Assert.assertNotNull(candidatosRecuperados[0].getNome());

@@ -1,15 +1,14 @@
 package Login.service;
 
-import Login.dto.CandidatoValidoDTO;
-import Login.dto.InvalidDTO;
-import Login.dto.LoginValidDTO;
-import Login.dto.TokenDTO;
+import Login.dto.*;
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 
@@ -17,12 +16,12 @@ public class CandidatoService {
 
     private static final String baseUrl = "https://gerenciador-curriculo-teste.herokuapp.com/candidato";
 
-    public CandidatoValidoDTO cadastroCandidatoValido(String jsonBody, TokenDTO token) {
+    public CandidatoValidoDTO cadastroCandidatoValido(String jsonBody, TokenDTO token, String documentoValidoPath) {
 
         return given().
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
-                multiPart("documentoValido", new File("src/test/resources/data/curriculo/curriculo.pdf"), "multipart/form-data").
+                multiPart("documento", new File(documentoValidoPath), "multipart/form-data").
                 multiPart("candidato", jsonBody, "application/json").
                 log().all()
                 .when()
@@ -39,7 +38,7 @@ public class CandidatoService {
         return given().
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
-                multiPart("documentoValido", new File(docPath), "multipart/form-data").
+                multiPart("documento", new File(docPath), "multipart/form-data").
                 multiPart("candidato", jsonBody, "application/json").
                 log().all()
                 .when()
@@ -49,6 +48,22 @@ public class CandidatoService {
                 .all()
                 .statusCode(httpStatus)
                 .extract().as(InvalidDTO.class);
+    }
+
+    public CandidatoCompletoDTO edicaoCandidatoValido(String jsonBody, TokenDTO token, Integer httpStatus) {
+        return given().
+                contentType(ContentType.JSON).
+                header("Authorization", token.getToken()).
+                log().all().
+                body(jsonBody).
+                log().all()
+                .when()
+                .put(baseUrl + "/update-candidato")
+                .then()
+                .log()
+                .all()
+                .statusCode(200)
+                .extract().as(CandidatoCompletoDTO.class);
     }
 
 
@@ -125,4 +140,6 @@ public class CandidatoService {
                 .all()
                 .statusCode(httpStatus);
     }
+
+
 }
