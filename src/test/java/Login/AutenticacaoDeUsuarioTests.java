@@ -32,6 +32,8 @@ public class AutenticacaoDeUsuarioTests {
     }
 
     public static TokenDTO getAuthenticatedToken() {
+
+        // Recuperar token autorizado.
         LoginService loginService = new LoginService();
         JsonManipulation.criarJsonCadastro(loginService.criarLoginValido());
         loginService.cadastroLoginValido(converterJsonParaArrayDeBytes(loginCriado));
@@ -156,8 +158,8 @@ public class AutenticacaoDeUsuarioTests {
         JsonManipulation.criarJsonCadastro(loginService.criarLoginValido());
 
         /*******************************************************************************
-         Executo de fato a operação, tentando recuperar um token com email valido e senha
-         incorreta.
+         Executo de fato a operação, tentando recuperar um token com email valido porém inexistente
+         e uma senha válida.
          Recupero o retorno da requisição para realizar as validações.
          ******************************************************************************/
 

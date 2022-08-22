@@ -149,10 +149,10 @@ public class CriacaoDeUsuarioTests {
          ********************************************************************/
         JsonManipulation.criarJsonCadastro(loginService.criarLoginSenhaLonga());
 
-        /*******************************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um usuário com email nulo.
+        /******************************************************************************************
+         Executo de fato a operação, tentando cadastrar/criar um usuário com uma senha muito longa.
          Recupero o retorno da requisição para realizar as validações.
-         ******************************************************************************/
+         ******************************************************************************************/
         InvalidDTO invalidDTO =
                 loginService.cadastroLoginSenhaLonga(converterJsonParaArrayDeBytes(loginCriado));
 
@@ -173,10 +173,10 @@ public class CriacaoDeUsuarioTests {
          ********************************************************************/
         JsonManipulation.criarJsonCadastro(loginService.criarLoginSemDominio());
 
-        /*******************************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um usuário com email nulo.
+        /*************************************************************************************
+         Executo de fato a operação, tentando cadastrar/criar um usuário com email sem domínio.
          Recupero o retorno da requisição para realizar as validações.
-         ******************************************************************************/
+         ************************************************************************************/
         InvalidDTO invalidDTO =
                 loginService.cadastroLoginSemDominio(converterJsonParaArrayDeBytes(loginCriado));
 
@@ -198,7 +198,7 @@ public class CriacaoDeUsuarioTests {
         JsonManipulation.criarJsonCadastro(loginService.criarLoginEmailEmBranco());
 
         /*******************************************************************************
-         Executo de fato a operação, tentando cadastrar/criar um usuário com email nulo.
+         Executo de fato a operação, tentando cadastrar/criar um usuário com email em branco.
          Recupero o retorno da requisição para realizar as validações.
          ******************************************************************************/
         InvalidDTO invalidDTO =

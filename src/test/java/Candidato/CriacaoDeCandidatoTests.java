@@ -6,7 +6,6 @@ import Login.service.CandidatoService;
 import Utils.JsonManipulation;
 import org.apache.http.HttpStatus;
 import org.json.simple.JSONObject;
-import org.junit.Before;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,9 +19,6 @@ import static Utils.Util.converterJsonParaArrayDeBytes;
 public class CriacaoDeCandidatoTests {
 
     static CandidatoService candidatoService = new CandidatoService();
-
-
-    @Before
 
     @Test
     public void criarCandidatoValido(){
@@ -138,7 +134,6 @@ public class CriacaoDeCandidatoTests {
 
         candidatoService.cadastroCandidatoSemCurriculo(converterJsonParaArrayDeBytes(candidatoCriado),
                 getAuthenticatedToken(), HttpStatus.SC_BAD_REQUEST, documentoVazio);
-
 
     }
 

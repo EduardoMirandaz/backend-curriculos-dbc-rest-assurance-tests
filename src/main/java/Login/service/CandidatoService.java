@@ -19,7 +19,7 @@ public class CandidatoService {
         return given().
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
-                multiPart("documento", new File(documentoValidoPath), "multipart/form-data").
+                multiPart("documento", new File(documentoValidoPath), "application/pdf").
                 multiPart("candidato", jsonBody, "application/json").
                 log().all()
                 .when()
@@ -36,7 +36,7 @@ public class CandidatoService {
         return given().
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
-                multiPart("documento", new File(docPath), "multipart/form-data").
+                multiPart("documento", new File(docPath), "application/pdf").
                 multiPart("candidato", jsonBody, "application/json").
                 log().all()
                 .when()
@@ -145,7 +145,7 @@ public class CandidatoService {
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
                 multiPart("idCandidato", idCandidato, "application/json").
-                multiPart("documento", new File(documentoValidoPath), "multipart/form-data").
+                multiPart("documento", new File(documentoValidoPath), "application/pdf").
                 log().all()
                 .when()
                 .put(baseUrl + "/update-documento/" + idCandidato)
@@ -162,7 +162,7 @@ public class CandidatoService {
                 header("content-type", "multipart/form-data").
                 header("Authorization", token.getToken()).
                 multiPart("idCandidato", idCandidato, "application/json").
-                multiPart("documento", new File(documentoValidoPath), "multipart/form-data").
+                multiPart("documento", new File(documentoValidoPath), "application/pdf").
                 log().all()
                 .when()
                 .put(baseUrl + "/update-documento/" + idCandidato)
@@ -172,5 +172,23 @@ public class CandidatoService {
                 .statusCode(httpStatusExpected)
                 .extract().as(InvalidDTO.class);
     }
+
+    public InvalidDTO cadastroCandidatoDocumentoGrande(String jsonBody, TokenDTO token, Integer httpStatus, String docPath) {
+
+        return given().
+                header("content-type", "multipart/form-data").
+                header("Authorization", token.getToken()).
+                multiPart("documento", new File(docPath), "application/pdf").
+                multiPart("candidato", jsonBody, "application/json").
+                log().all()
+                .when()
+                .post(baseUrl)
+                .then()
+                .log()
+                .all()
+                .statusCode(httpStatus)
+                .extract().as(InvalidDTO.class);
+    }
+
 
 }
