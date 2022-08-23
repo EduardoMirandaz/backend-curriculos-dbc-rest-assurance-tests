@@ -44,7 +44,7 @@ public class AdicionarCandidatoNaVagaTests {
         Integer idVaga = 25865;
 
         /********************************************************************
-         Executo de fato a operação, tentando vincular um candidato válido
+         Executo de fato a operação, tentando vincular um candidato inválido
          a uma vaga válida. *
          *********************************************************************/
         InvalidDTO invalidDTO = vagaService.vincularCandidatoAVagaInvalido(
@@ -87,7 +87,7 @@ public class AdicionarCandidatoNaVagaTests {
         Integer idVaga = 25865;
 
         /********************************************************************
-         Executo de fato a operação, tentando desvincular um candidato válido
+         Executo de fato a operação, tentando desvincular um candidato inválido
          a uma vaga válida. *
          *********************************************************************/
         InvalidDTO invalidDTO = vagaService.desvincularCandidatoAVagaInvalido(
@@ -132,11 +132,10 @@ public class AdicionarCandidatoNaVagaTests {
         Integer idVaga = 25865;
 
         /********************************************************************
-         Executo de fato a operação, tentando vincular um candidato válido
+         Executo de fato a operação, tentando desvincular um candidato válido
          a uma vaga válida porém sem autorização. *
          *********************************************************************/
         vagaService.desvincularCandidatoAVagaSemAutorizacao(idVaga, idCandidato);
-
-
+        
     }
 }

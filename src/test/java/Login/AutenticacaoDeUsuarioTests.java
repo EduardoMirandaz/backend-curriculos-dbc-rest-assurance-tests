@@ -65,7 +65,7 @@ public class AutenticacaoDeUsuarioTests {
     public void obterAutenticacaoComUsuarioExistenteESenhaIncorreta(){
 
         /********************************************************************
-         Crio um novo usuário válido e de alta probabilidade de unicidade.  *
+         Crio um novo usuário válido.  *
          ********************************************************************/
         JsonManipulation.criarJsonCadastro(loginService.criarLoginValido());
 
@@ -97,13 +97,13 @@ public class AutenticacaoDeUsuarioTests {
     public void obterAutenticacaoComEmailESenhaEmBranco(){
 
         /********************************************************************
-         Crio um novo usuário válido e de alta probabilidade de unicidade.  *
+         Crio um novo usuário válido.  *
          ********************************************************************/
         JsonManipulation.criarJsonCadastro(loginService.criarLoginEmBranco());
 
         /*******************************************************************************
          Executo de fato a operação, tentando recuperar um token com email valido e senha
-         incorreta.
+         em branco.
          Recupero o retorno da requisição para realizar as validações.
          ******************************************************************************/
 
@@ -126,13 +126,13 @@ public class AutenticacaoDeUsuarioTests {
     public void obterAutenticacaoComEmailESenhaNulos(){
 
         /********************************************************************
-         Crio um novo usuário válido e de alta probabilidade de unicidade.  *
+         Crio um novo usuário válido.  *
          ********************************************************************/
         JsonManipulation.criarJsonCadastro(loginService.criarLoginNulo());
 
         /*******************************************************************************
          Executo de fato a operação, tentando recuperar um token com email valido e senha
-         incorreta.
+         nula.
          Recupero o retorno da requisição para realizar as validações.
          ******************************************************************************/
 
@@ -153,7 +153,7 @@ public class AutenticacaoDeUsuarioTests {
     public void obterAutenticacaoComEmailValidoInexistenteESenhaValida(){
 
         /********************************************************************
-         Crio um novo usuário válido e de alta probabilidade de unicidade.  *
+         Crio um novo usuário válido.  *
          ********************************************************************/
         JsonManipulation.criarJsonCadastro(loginService.criarLoginValido());
 

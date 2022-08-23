@@ -21,7 +21,7 @@ public class CriacaoDeUsuarioTests {
     public void criarUsuarioValido(){
 
         /********************************************************************
-         Crio um novo usuário válido e de alta probabilidade de unicidade.  *
+         Crio um novo usuário válido.  *
          ********************************************************************/
         Map<String, String> usuarioEnviadoParaRequisicao = JsonManipulation
                 .criarJsonCadastro(loginService.criarLoginValido());
@@ -108,7 +108,7 @@ public class CriacaoDeUsuarioTests {
 
         /********************************************************************
          Realizando a validação de que nao foi possivel criar um usuario com
-         senha nula e verificando os erros retornados.
+         senha em branco e verificando os erros retornados.
          *********************************************************************/
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("must not be blank")
@@ -134,7 +134,7 @@ public class CriacaoDeUsuarioTests {
 
         /********************************************************************
          Realizando a validação de que nao foi possivel criar um usuario com
-         senha nula e verificando os erros retornados.
+         senha de tamanho invalido inferior e verificando os erros retornados.
          *********************************************************************/
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .anyMatch(erro -> erro.contains("size must be between 8 and 64")));
@@ -158,7 +158,7 @@ public class CriacaoDeUsuarioTests {
 
         /********************************************************************
          Realizando a validação de que nao foi possivel criar um usuario com
-         senha nula e verificando os erros retornados.
+         senha de tamanho invalido superior e verificando os erros retornados.
          *********************************************************************/
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .anyMatch(erro -> erro.contains("size must be between 8 and 64")));
@@ -182,7 +182,7 @@ public class CriacaoDeUsuarioTests {
 
         /********************************************************************
          Realizando a validação de que nao foi possivel criar um usuario com
-         senha nula e verificando os erros retornados.
+         email sem dominio e verificando os erros retornados.
          *********************************************************************/
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .anyMatch(erro -> erro.contains("email: must be a well-formed email address")));
@@ -206,7 +206,7 @@ public class CriacaoDeUsuarioTests {
 
         /********************************************************************
          Realizando a validação de que nao foi possivel criar um usuario com
-         senha nula e verificando os erros retornados.
+         email em branco e verificando os erros retornados.
          *********************************************************************/
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("email: must not be blank")
@@ -219,7 +219,7 @@ public class CriacaoDeUsuarioTests {
     public void criarUsuarioEmailJaExiste(){
 
         /********************************************************************
-         Crio um novo usuário válido e de alta probabilidade de unicidade.  *
+         Crio um novo usuário válido.  *
          ********************************************************************/
         Map<String, String> usuarioEnviadoParaRequisicao = JsonManipulation
                 .criarJsonCadastro(loginService.criarLoginValido());
@@ -236,7 +236,7 @@ public class CriacaoDeUsuarioTests {
 
         /********************************************************************
          Realizando a validação de que nao foi possivel criar um usuario com
-         senha nula e verificando os erros retornados.
+         email repetido e verificando os erros retornados.
          *********************************************************************/
         Assert.assertTrue(Arrays.stream(invalidDTO.getErrors())
                 .allMatch(erro -> erro.contains("Email já cadastrado.")));

@@ -27,8 +27,7 @@ public class RecuperarVagasTests {
                 .criarJsonCandidato();
 
         /********************************************************************
-         Executo de fato a operação, tentando vincular um candidato válido
-         a uma vaga válida. *
+         Executo de fato a operação, tentando listar as vagas. *
          *********************************************************************/
         String nroPagina = "1";
         String tamanhoCadaPagina =  "100";
@@ -57,8 +56,7 @@ public class RecuperarVagasTests {
                 .criarJsonCandidato();
 
         /********************************************************************
-         Executo de fato a operação, tentando vincular um candidato válido
-         a uma vaga válida. *
+         Executo de fato a operação, tentando listar vagas vazias. *
          *********************************************************************/
         String nroPagina = "0";
         String tamanhoCadaPagina =  "0";
