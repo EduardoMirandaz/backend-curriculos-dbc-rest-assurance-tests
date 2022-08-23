@@ -164,7 +164,7 @@ public class CandidatoFaker {
         candidatoCompleto.put("cpf", dadosPessoais.get("cpf"));
         candidatoCompleto.put("dataNascimento", dadosPessoais.get("dateTime"));
         candidatoCompleto.put("telefone", dadosPessoais.get("phone"));
-        candidatoCompleto.put("senioridade", Senioridade.PLENO.toString());
+        candidatoCompleto.put("senioridade", Senioridade.ESPECIALISTA.toString());
         candidatoCompleto.put("cargo", faker.job().keySkills());
         candidatoCompleto.put("endereco", enderecoJSON);
         candidatoCompleto.put("escolaridades", escolaridades);

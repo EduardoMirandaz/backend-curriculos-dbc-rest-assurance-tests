@@ -11,7 +11,7 @@ import java.util.Arrays;
 import static Candidato.CriacaoDeCandidatoTests.cadastrarCandidato;
 import static Login.AutenticacaoDeUsuarioTests.getAuthenticatedToken;
 
-public class AdicionarCandidatoNaVagaTests {
+public class VinculoCandidatoNaVagaTests {
 
     static VagaService vagaService = new VagaService();
 

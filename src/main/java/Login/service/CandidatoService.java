@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 
 public class CandidatoService {
 
-    private static final String baseUrl = "https://gerenciador-curriculo-teste.herokuapp.com/candidato";
+    private static final String baseUrl = "https://gerenciador-curriculo.herokuapp.com/candidato";
 
     public CandidatoValidoDTO cadastroCandidatoValido(String jsonBody, TokenDTO token, String documentoValidoPath) {
 

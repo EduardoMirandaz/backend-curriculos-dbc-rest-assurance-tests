@@ -38,7 +38,6 @@ public class CriacaoDeCandidatoTests {
                         getAuthenticatedToken(), documentoValido);
 
 
-
         /**************************************************************************
          Realizando a validação de que os campos criados conferem com os enviados.*
          **************************************************************************/
